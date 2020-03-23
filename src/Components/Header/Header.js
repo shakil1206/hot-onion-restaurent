@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Header.css';
 import Logo from '../../Image/Logo/logo2.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCartPlus } from '@fortawesome/free-solid-svg-icons';
-import Banner from '../../Image/Logo/bannerbackground.png';
 
 const Header = () => {
+
+
     return (
         <div>
             <nav className="navbar navbar-light bg-light col-md-12">
@@ -31,13 +32,13 @@ const Header = () => {
                 </div>
             </div>
 
-            <nav className="bottom-nav">
-                <a onClick={} href="/breakfast">Breakfast</a>
+            <nav className="bottom-nav">               
+
+                <a href="/breakfast">Breakfast</a>
                 <a href="/lunch">Lunch</a>
-                <a href="/dinner">Dinner</a>  
-                
-                        
+                <a href="/dinner">Dinner</a>
             </nav>
+
 
 
         </div>

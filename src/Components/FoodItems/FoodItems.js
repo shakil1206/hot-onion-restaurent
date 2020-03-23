@@ -1,27 +1,27 @@
 import React from 'react';
+import './FoodItems.css';
 
-const FoodItems = () => {
+const FoodItems = (props) => {
+
+    const { img, name, title, price } = props.item;
     return (
-        <div>
-            <div className="container">
-                <div className="row">
-                    <div className="col-md-4">
-                        <div class="card-deck">
-                            <div className="card">
-                                <img src="..." class="card-img-top" alt="..." />
-                                <div className="card-body">
-                                    <h5 className="card-title">Card title</h5>
-                                    <p className="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                                </div>
-                                <div className="card-footer">
-                                    <small className="text-muted">Last updated 3 mins ago</small>
-                                </div>
-                            </div>
-                        </div>
 
+        <div className="col-md-4">
+            <div className="card-deck card-style">
+                <div className="card">
+                    <img src={img} className="card-img-top" alt="..." />
+                    <div className="card-body">
+                        <h6 className="card-title">{name}</h6>
+                        <p className="card-text">{title}</p>
+                    </div>
+                    <div className="card-footer">
+                        <h6 className="text-muted">${price}</h6>
                     </div>
                 </div>
             </div>
+
+
+
         </div>
     );
 };
