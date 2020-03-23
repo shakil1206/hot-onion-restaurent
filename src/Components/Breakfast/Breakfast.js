@@ -10,7 +10,6 @@ const Breakfast = () => {
 
     
     const foodItems = foods.filter(food=> food.category==="breakfast");
-    setbreakfast(foodItems);
 
     return (
         <div>
