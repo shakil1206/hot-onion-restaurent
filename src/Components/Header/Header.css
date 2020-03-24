@@ -33,7 +33,7 @@
     background-image: url('../../Image/Logo/bannerbackground.png');
     height: 500px;
     background-repeat: no-repeat;
-    background-size: 100%;
+    background-size: 99%;
     padding-top: 10%;
 }
 
@@ -50,4 +50,15 @@
 }
 .bottom-nav li:visited{
     color: red;
+}
+
+.cart-style{
+    font-size: 20px;
+    font-weight: bold;
+    color: black;
+}
+
+.cart-style :hover{
+    color:red;
+    text-decoration: none;
 }

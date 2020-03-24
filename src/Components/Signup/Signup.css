@@ -1,0 +1,25 @@
+.signup-style{
+    height: 500px;
+    width: 400px;
+    background-color: lightgray;
+    margin-top: 30px;
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: 50px auto;
+    border-radius: 10px 100px 100px 10px;
+    padding: 20px;
+    box-shadow: 5px 5px 10px  lightgray;
+
+}
+
+.signup-style img{
+    width: 250px;
+}
+
+.signup-style a{
+    color: red;
+}
+.signup-style a:hover{
+    color: red;
+}

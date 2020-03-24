@@ -1,9 +1,14 @@
 .not-found{
+    
+    background-color: red;
+    color: white;
+    height: 200px;
+    width: 600px;
+    border-radius: 4px 350px;
+    padding: 20px;
     position: absolute;
-    top: 0;
-    bottom: 0;
     left: 0;
     right: 0;
-    margin: auto;
+    margin: 100px auto;
     
 }

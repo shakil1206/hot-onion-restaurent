@@ -1,0 +1,30 @@
+.img-style img{
+    margin-top: 20px;
+    height: 600px;
+    width: 600px;
+    border-radius: 50%;
+}
+
+.left-side{
+
+    margin-top: 80px;
+    text-align: justify;
+    padding:10px;
+    
+}
+
+.left-side img{
+    height: 200px;
+    width: 200px;
+    border-radius: 50%;
+}
+
+.btnStyle{
+    display: inline-flex;
+    margin-top: 50px;
+}
+
+.btnStyle input{
+    width: 50px;
+    text-align: center;
+}

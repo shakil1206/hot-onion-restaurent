@@ -12,32 +12,65 @@ import {
 import Breakfast from './Components/Breakfast/Breakfast';
 import Lunch from './Components/Lunch/Lunch';
 import Dinner from './Components/Dinner/Dinner';
+import ProductDetails from './Components/ProductDetails/ProductDetails';
+import Review from './Components/Review/Review';
+import Signup from './Components/Signup/Signup';
+import Login from './Components/Login/Login';
+import Footer from './Components/Footer/Footer';
+import Navigation from './Components/Navigation/Navigation';
+import FooterContent from './Components/FooterContent/FooterContent';
 
 function App() {
   return (
     <div className="App">
 
-      <Header></Header>  
+        <Navigation></Navigation>      
       <Router>
+
         <Switch>
           <Route path="/breakfast">
+          <Header></Header>
             <Breakfast></Breakfast>
+            <FooterContent></FooterContent>
+            <Footer></Footer>
           </Route>
           <Route path="/lunch">
+          <Header></Header>
             <Lunch></Lunch>
+            <FooterContent></FooterContent>
+            <Footer></Footer>
           </Route>
           <Route path="/dinner">
+          <Header></Header>
             <Dinner></Dinner>
+            <FooterContent></FooterContent>
+            <Footer></Footer>
           </Route>
           <Route exact path="/">
+            <Header></Header>
             <Breakfast></Breakfast>
+            <FooterContent></FooterContent>
+            <Footer></Footer>
+          </Route>
+          <Route path="/signup">
+            <Signup></Signup>
+          </Route>
+          <Route path="/login">
+            <Login></Login>
+          </Route>
+          <Route path="/cart">
+            <Review></Review>
+          </Route>
+          <Route path="/food/:productkey">
+            <ProductDetails></ProductDetails>
           </Route>
           <Route path="*">
             <NotFound></NotFound>
           </Route>
         </Switch>
+        
       </Router>
-         
+    
 
     </div>
   );

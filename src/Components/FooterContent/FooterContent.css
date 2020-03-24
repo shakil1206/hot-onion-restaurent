@@ -1,0 +1,11 @@
+.container h1{
+    text-align: left;
+}
+
+.content{
+    padding-bottom: 50px;
+}
+
+.card:hover{
+    box-shadow: 4px 4px 12px 5px lightgray;
+}

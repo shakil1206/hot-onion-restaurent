@@ -1,0 +1,22 @@
+.row{
+
+    padding-bottom: 200px;
+}
+
+.review-cart{
+    width: 400px;
+    height: 600px;
+    overflow: auto;
+    margin-left: 65px;
+}
+
+.review-cart p,h5{
+    text-align: justify;
+    text-indent: 20px;
+    margin: 0;
+}
+
+
+.price-styled{
+    display: flex;
+}
