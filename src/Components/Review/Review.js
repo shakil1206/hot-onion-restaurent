@@ -3,10 +3,13 @@ import { getDatabaseCart, removeFromDatabaseCart } from '../../utilities/databas
 import fakeData from '../../fakeData';
 import './Review.css';
 import ReviewItem from '../ReviewItem/ReviewItem';
+import { Link } from 'react-router-dom';
+import { useAuth } from '../UseAuth/UseAuth';
 
 const Review = () => {
 
     const [cart, setCart] = useState([]);
+    const auth = useAuth();
 
     const removeProduct = (productKey) => {
         //Remove from database cart
@@ -16,7 +19,6 @@ const Review = () => {
         removeFromDatabaseCart(productKey);
 
     }
-
 
     //Calculating product price
     let total = 0;
@@ -46,9 +48,6 @@ const Review = () => {
     }
 
     let GrandTotal = total + tax + deliverFee;
-
-
-
 
     useEffect(() => {
 
@@ -115,7 +114,13 @@ const Review = () => {
                                 </div>
                             </div>
 
-                            <button className="btn btn-danger form-control">Place Order</button>
+                            <Link to="/orderComplited">
+                                {
+                                    auth.user ? <button  className="btn btn-danger form-control">Place Order</button>
+                                    :<button  className="btn btn-danger form-control">Log in First!</button>
+
+                                }
+                            </Link>
                         </div>
 
                     </div>

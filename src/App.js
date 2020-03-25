@@ -19,58 +19,63 @@ import Login from './Components/Login/Login';
 import Footer from './Components/Footer/Footer';
 import Navigation from './Components/Navigation/Navigation';
 import FooterContent from './Components/FooterContent/FooterContent';
+import { AuthContextProvider, PrivateRoute } from './Components/UseAuth/UseAuth';
+import OrderComplited from './Components/OrderComplited/OrderComplited';
 
 function App() {
   return (
     <div className="App">
+      <AuthContextProvider>
+        <Navigation></Navigation>
+        <Router>
 
-        <Navigation></Navigation>      
-      <Router>
+          <Switch>
+            <Route path="/breakfast">
+              <Header></Header>
+              <Breakfast></Breakfast>
+              <FooterContent></FooterContent>
+              <Footer></Footer>
+            </Route>
+            <Route path="/lunch">
+              <Header></Header>
+              <Lunch></Lunch>
+              <FooterContent></FooterContent>
+              <Footer></Footer>
+            </Route>
+            <Route path="/dinner">
+              <Header></Header>
+              <Dinner></Dinner>
+              <FooterContent></FooterContent>
+              <Footer></Footer>
+            </Route>
+            <Route exact path="/">
+              <Header></Header>
+              <Breakfast></Breakfast>
+              <FooterContent></FooterContent>
+              <Footer></Footer>
+            </Route>
+            <Route path="/signup">
+              <Signup></Signup>
+            </Route>
+            <Route path="/login">
+              <Login></Login>
+            </Route>
+            <Route path="/cart">
+              <Review></Review>
+            </Route>
+            <PrivateRoute path="/orderComplited">
+              <OrderComplited></OrderComplited>
+            </PrivateRoute>
+            <Route path="/food/:productkey">
+              <ProductDetails></ProductDetails>
+            </Route>
+            <Route path="*">
+              <NotFound></NotFound>
+            </Route>
+          </Switch>
 
-        <Switch>
-          <Route path="/breakfast">
-          <Header></Header>
-            <Breakfast></Breakfast>
-            <FooterContent></FooterContent>
-            <Footer></Footer>
-          </Route>
-          <Route path="/lunch">
-          <Header></Header>
-            <Lunch></Lunch>
-            <FooterContent></FooterContent>
-            <Footer></Footer>
-          </Route>
-          <Route path="/dinner">
-          <Header></Header>
-            <Dinner></Dinner>
-            <FooterContent></FooterContent>
-            <Footer></Footer>
-          </Route>
-          <Route exact path="/">
-            <Header></Header>
-            <Breakfast></Breakfast>
-            <FooterContent></FooterContent>
-            <Footer></Footer>
-          </Route>
-          <Route path="/signup">
-            <Signup></Signup>
-          </Route>
-          <Route path="/login">
-            <Login></Login>
-          </Route>
-          <Route path="/cart">
-            <Review></Review>
-          </Route>
-          <Route path="/food/:productkey">
-            <ProductDetails></ProductDetails>
-          </Route>
-          <Route path="*">
-            <NotFound></NotFound>
-          </Route>
-        </Switch>
-        
-      </Router>
-    
+        </Router>
+      </AuthContextProvider>
 
     </div>
   );

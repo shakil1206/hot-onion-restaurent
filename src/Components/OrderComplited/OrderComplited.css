@@ -1,0 +1,56 @@
+.shipment{
+    height: 600px;
+    width: 350px;
+    background-color: lightgray;
+    text-align: left;
+    padding: 30px;
+    border-radius: 10px;
+}
+
+.shipment .images2{
+    width:  100px;
+    margin-top: 50px;
+    
+}
+
+.location{
+    padding: 10px;
+    height: 140px;
+    width: 300px;
+    background-color: white;
+    border-radius: 10px;
+}
+.location p{
+    text-indent: 23px;
+}
+
+.raider .images{
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+}
+
+.raider{
+    height: 70px;
+    width: 300px;
+    border-radius: 10px;
+    background-color: white;
+    display: flex;
+    padding: 10px;
+    
+}
+
+.raider h4, p{
+    margin: 0;
+    margin-left: 10px;
+}
+
+
+.shipment .btn{
+   margin-top: 30px;
+   margin-left: 5px;
+}
+
+.order{
+    margin-top: 100px;
+}

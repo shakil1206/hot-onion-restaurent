@@ -1,27 +1,32 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Signup.css';
 import Logo from '../../Image/Logo/logo2.png';
+import Auth from '../UseAuth/UseAuth';
 
 const Signup = () => {
+
+
     return (
         <div>
             <div className="signup-style">
                 <img src={Logo} alt="" />
                 <br />
                 <br />
-                <form>
-                    <input className="form-control" type="text" placeholder="Your Name" required />
+               
+                    <input name="name" className="form-control" type="text" placeholder="Your Name" />
                     <br />
-                    <input className="form-control" type="text" placeholder="Your Email" required />
+                    <input name="email"  className="form-control" type="text" placeholder="Your Email"  />
+
                     <br />
-                    <input className="form-control" type="password" placeholder="Password" required/>
+                    <input name="password" className="form-control" type="password" placeholder="Your Password" />
+
                     <br />
-                    <input className="form-control" type="password" placeholder="Confirm Password" required />
-                    <br />
-                    <input className="form-control btn btn-danger" type="Submit" value="Sign Up" />
-                    <br/>
-                    <a href="/login">Already have an account?</a>
-                </form>
+                    <input name="confirmPassword" className="form-control" type="password" placeholder="Confirm Password" />
+                        <br />
+                    <button className="form-control btn btn-danger" > Sign up </button>
+                    <br />               
+                    <a href="/login">Already have an account or Sign up Google?</a>
+
 
 
             </div>

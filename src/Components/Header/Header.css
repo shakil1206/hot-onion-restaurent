@@ -32,8 +32,8 @@
 .banner{
     background-image: url('../../Image/Logo/bannerbackground.png');
     height: 500px;
+    background-size: 100%;
     background-repeat: no-repeat;
-    background-size: 99%;
     padding-top: 10%;
 }
 
