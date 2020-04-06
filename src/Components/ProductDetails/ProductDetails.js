@@ -14,7 +14,7 @@ const ProductDetails = () => {
 
     useEffect(() => {
 
-        fetch(`http://localhost:4200/product/${productkey}`)
+        fetch(`https://quiet-earth-52235.herokuapp.com/product/${productkey}`)
             .then(res => res.json())
             .then(data => {
                 setProduct(data);

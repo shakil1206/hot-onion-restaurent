@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { getDatabaseCart, removeFromDatabaseCart } from '../../utilities/databaseManager';
+import { getDatabaseCart, removeFromDatabaseCart, clearLocalShopingCart } from '../../utilities/databaseManager';
 import './Review.css';
 import ReviewItem from '../ReviewItem/ReviewItem';
 import { Link } from 'react-router-dom';
@@ -16,14 +16,47 @@ const Review = () => {
 
     const stripePromise = loadStripe('pk_test_ubopnwj9basezWfBovYMu2MN00zSxpuU6i');
 
+    //For set Form Visible Left side
+    const [formVisible, setFormVisible] = useState(true);
+
+    //for hide Oreder review and show payment method
+    const [shipInfoAdded, setShipInfoAdded] = useState(null);
+
+    //Visible Process order button
+    const [processOrder, setProcessOrder] = useState(false);
+
+    //Load data from input field
+    const [orderInfo, setOrderInfo] = useState(null);
+
+
+    //Get Order Id
+    const [orderId, setOrderId] = useState(null);
+
+
+
+    //Process order button visible method
+    const handleProcessOrder = () => {
+        setProcessOrder(true);
+    }
 
 
     const onSubmit = (data) => {
-        console.log(auth.user.email, auth.user.name);
+        setFormVisible(false);
+        setOrderInfo(data);
+
+    }
+
+    const placeOrder = (payment) => {
 
         const savedCart = getDatabaseCart();
-        const orderDetail = { email: auth.user.email, cart: savedCart };
-        fetch('http://localhost:4200/placeOrder', {
+        const orderDetail = {
+            email: auth.user.email,
+            cart: savedCart,
+            shifpment: orderInfo,
+            payment: payment
+
+        };
+        fetch('https://quiet-earth-52235.herokuapp.com/placeOrder', {
             method: 'POST',
             body: JSON.stringify(orderDetail),
             headers: {
@@ -32,12 +65,19 @@ const Review = () => {
         })
             .then(response => response.json())
             .then(data => {
-                console.log("Order Placed");
+                // console.log("Order Placed");
+                clearLocalShopingCart();
+                setOrderId(data._id);
+
             })
     }
 
     const [cart, setCart] = useState([]);
 
+    //Method visible Payment mehthod
+    const handlePlaceOrder = () => {
+        setShipInfoAdded(true)
+    }
 
 
     const removeProduct = (productKey) => {
@@ -83,7 +123,7 @@ const Review = () => {
         const productKeys = Object.keys(savedCart);
 
 
-        fetch('http://localhost:4200/getProductsByKey', {
+        fetch('https://quiet-earth-52235.herokuapp.com/getProductsByKey', {
             method: 'POST',
             body: JSON.stringify(productKeys),
             headers: {
@@ -111,73 +151,106 @@ const Review = () => {
                         <h3 style={{ textAlign: 'left', marginTop: '40px' }}>Edit Delivery Details</h3>
                         <hr></hr>
 
-                        <form className="ship-form" onSubmit={handleSubmit(onSubmit)}>
-                            <input className="form-control" name="name" ref={register({ required: true })} placeholder="Name" />
-                            {errors.name && <span className="error">Name is required</span>}
-                            <br />
-                            <input className="form-control" name="email" ref={register({ required: true })} placeholder="Email" />
-                            {errors.email && <span className="error">Email is required</span>}
-                            <br />
-                            <input className="form-control" name="addressLine1" ref={register({ required: true })} placeholder="Address Line1" />
-                            {errors.addressLine1 && <span className="error">Address is required</span>}
-                            <br />
-                            <input className="form-control" name="addressLine2" ref={register} placeholder="Address Line2" />
-                            <br />
-                            <input className="form-control" name="city" ref={register({ required: true })} placeholder="City" />
-                            {errors.city && <span className="error">City is required</span>}
-                            <br />
-                            <input className="form-control" name="country" ref={register({ required: true })} placeholder="Country" />
-                            {errors.country && <span className="error">Country is required</span>}
-                            <br />
-                            <input className="form-control" name="zipcode" ref={register({ required: true })} placeholder="Zip Code" />
-                            {errors.zipcode && <span className="error">Zipcode is required</span>}
-                            <br />
-                            <input className="form-control btn btn-danger" type="submit" value="Save And Continue" />
-                        </form>
+                        {
+                            formVisible ? <form className="ship-form" onSubmit={handleSubmit(onSubmit)}>
+                                <p>Please Login first! then fill up your information!</p>
+                                <input className="form-control" name="name" ref={register({ required: true })} placeholder="Name" />
+                                {errors.name && <span className="error">Name is required</span>}
+                                <br />
+                                <input className="form-control" name="email" ref={register({ required: true })} placeholder="Email" />
+                                {errors.email && <span className="error">Email is required</span>}
+                                <br />
+                                <input className="form-control" name="addressLine1" ref={register({ required: true })} placeholder="Address Line1" />
+                                {errors.addressLine1 && <span className="error">Address is required</span>}
+                                <br />
+                                <input className="form-control" name="addressLine2" ref={register} placeholder="Address Line2" />
+                                <br />
+                                <input className="form-control" name="city" ref={register({ required: true })} placeholder="City" />
+                                {errors.city && <span className="error">City is required</span>}
+                                <br />
+                                <input className="form-control" name="country" ref={register({ required: true })} placeholder="Country" />
+                                {errors.country && <span className="error">Country is required</span>}
+                                <br />
+                                <input className="form-control" name="zipcode" ref={register({ required: true })} placeholder="Zip Code" />
+                                {errors.zipcode && <span className="error">Zipcode is required</span>}
+                                <br />
+                                <input className="form-control btn btn-danger" type="submit" value="Save And Continue" />
+                            </form>
+                                : <h3>Your Information has been saved. <br /> Now click on Place Order!</h3>
 
-                        <Elements stripe={stripePromise}>
-                            <CheckoutForm></CheckoutForm>
-                        </Elements>
+
+                        }
+
+
 
 
                     </div>
                     <div className="form-control" className="col-md-6">
 
-                        <h3 style={{ textAlign: 'center', marginTop: '40px' }}>Your Choocen Product</h3>
-                        <hr></hr>
-                        <div className="review-cart">
-                            <p>From: <strong>Gulshan Plaza Restaurent GPR</strong></p>
-                            <p>Arriving 20 - 30 min</p>
-                            <p>107 Rd No 8</p>
+                        <div style={{ display: shipInfoAdded && 'none' }}>
+                            <h3 style={{ textAlign: 'center', marginTop: '40px' }}>Your Choocen Product</h3>
+                            <hr></hr>
+                            <p>After login Please fill up Your Information first!</p>
 
-                            {
-                                cart.map(pd => <ReviewItem
-                                    removeProduct={removeProduct}
-                                    key={pd.key}
-                                    cart={pd}></ReviewItem>)
-                            }
-                            <div className="price-styled d-flex justify-content-between">
-                                <div>
-                                    <h5>Sub Total:</h5>
-                                    <h5>Tax:</h5>
-                                    <h5>Delivery Fee:</h5>
-                                    <h5>Total:</h5>
-                                </div>
-                                <div>
-                                    <h5>{total.toFixed(2)}</h5>
-                                    <h5>{tax.toFixed(2)}</h5>
-                                    <h5>{deliverFee.toFixed(2)}</h5>
-                                    <h5>{GrandTotal.toFixed(2)}</h5>
-                                </div>
-                            </div>
+                            <div className="review-cart">
+                                <p>From: <strong>Gulshan Plaza Restaurent GPR</strong></p>
+                                <p>Arriving 20 - 30 min</p>
+                                <p>107 Rd No 8</p>
 
-                            <Link to="/orderComplited">
                                 {
-                                    auth.user ? <button className="btn btn-danger form-control">Place Order</button>
+                                    cart.map(pd => <ReviewItem
+                                        removeProduct={removeProduct}
+                                        key={pd.key}
+                                        cart={pd}></ReviewItem>)
+                                }
+                                <div className="price-styled d-flex justify-content-between">
+                                    <div>
+                                        <h5>Sub Total:</h5>
+                                        <h5>Tax:</h5>
+                                        <h5>Delivery Fee:</h5>
+                                        <h5>Total:</h5>
+                                    </div>
+                                    <div>
+                                        <h5>{total.toFixed(2)}</h5>
+                                        <h5>{tax.toFixed(2)}</h5>
+                                        <h5>{deliverFee.toFixed(2)}</h5>
+                                        <h5>{GrandTotal.toFixed(2)}</h5>
+                                    </div>
+                                </div>
+
+                                {
+                                    auth.user ? <button onClick={handlePlaceOrder} disabled={cart.length === 0} className="btn btn-danger form-control">Place Order</button>
                                         : <button className="btn btn-danger form-control">Log in First!</button>
                                 }
-                            </Link>
+
+
+
+                            </div>
                         </div>
+
+                        <div style={{ display: shipInfoAdded ? 'block' : 'none' }}>
+                            <h3 style={{ textAlign: 'center', marginTop: '40px' }}>Add Your Payment method</h3>
+                            <hr></hr>
+                            <Elements stripe={stripePromise}>
+                                <CheckoutForm handleProcessOrder={handleProcessOrder} placeOrder={placeOrder} ></CheckoutForm>
+                            </Elements>
+
+                            {
+                                orderId && <div>
+                                    <h2>Thank you for shoping with us!</h2>
+                                    <h3>Your Order Id is: {orderId}</h3>
+                                </div>
+                            }
+
+                            <div style={{ display: processOrder ? 'block' : 'none' }}>
+                                <Link to="/orderComplited">
+                                    <button className="btn btn-danger form-control">Process Order</button>
+                                </Link>
+                            </div>
+
+
+                        </div>
+
 
                     </div>
                 </div>

@@ -8,7 +8,7 @@ const Lunch = () => {
 
     useEffect(() => {
 
-        fetch('http://localhost:4200/products')
+        fetch('https://quiet-earth-52235.herokuapp.com/products')
             .then(res => res.json())
             .then(data => {
                 setFoods(data);

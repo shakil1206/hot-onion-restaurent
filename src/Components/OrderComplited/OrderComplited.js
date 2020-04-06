@@ -5,12 +5,15 @@ import logo from '../../Image/Images/Group 1151.png';
 import logo2 from '../../Image/Images/Group 1152.png';
 
 const OrderComplited = () => {
+
     return (
         <div>
             <div className="container">
                 <div className="row order">
                     <div className="col-md-8">
                         <img src={map} alt="" />
+                        <br />
+
                     </div>
                     <div className="col-md-4">
                         <div className="shipment">
@@ -26,11 +29,11 @@ const OrderComplited = () => {
 
                             <div className="raider">
                                 <div>
-                                        <img className="images" src={logo2} alt=""/>
+                                    <img className="images" src={logo2} alt="" />
                                 </div>
                                 <div>
                                     <h4>Hamim</h4>
-                                    <p>Your raider</p>                                    
+                                    <p>Your raider</p>
                                 </div>
                             </div>
                             <button className="btn btn-danger form-control">Contact</button>
