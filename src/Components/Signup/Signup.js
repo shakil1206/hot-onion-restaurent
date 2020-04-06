@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './Signup.css';
 import Logo from '../../Image/Logo/logo2.png';
-import Auth from '../UseAuth/UseAuth';
 
 const Signup = () => {
 

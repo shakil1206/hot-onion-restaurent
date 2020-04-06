@@ -5,10 +5,17 @@ import ReviewItem from '../ReviewItem/ReviewItem';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../UseAuth/UseAuth';
 import { useForm } from 'react-hook-form';
+import CheckoutForm from '../CheckoutForm/CheckoutForm';
+
+import { loadStripe } from '@stripe/stripe-js';
+import { Elements } from '@stripe/react-stripe-js';
 
 const Review = () => {
     const auth = useAuth();
     const { register, handleSubmit, errors } = useForm();
+
+    const stripePromise = loadStripe('pk_test_ubopnwj9basezWfBovYMu2MN00zSxpuU6i');
+
 
 
     const onSubmit = (data) => {
@@ -127,6 +134,11 @@ const Review = () => {
                             <br />
                             <input className="form-control btn btn-danger" type="submit" value="Save And Continue" />
                         </form>
+
+                        <Elements stripe={stripePromise}>
+                            <CheckoutForm></CheckoutForm>
+                        </Elements>
+
 
                     </div>
                     <div className="form-control" className="col-md-6">
