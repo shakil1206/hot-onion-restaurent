@@ -1,11 +1,22 @@
-import React, { useState } from 'react';
-import fakeData from '../../fakeData';
+import React, { useState, useEffect } from 'react';
 import FoodItems from '../FoodItems/FoodItems';
 import { addToDatabaseCart } from '../../utilities/databaseManager';
 
 const Lunch = () => {
 
-    const [foods, setFoods] = useState(fakeData);    
+    const [foods, setFoods] = useState([]);
+
+    useEffect(() => {
+
+        fetch('http://localhost:4200/products')
+            .then(res => res.json())
+            .then(data => {
+                setFoods(data);
+            })
+
+    }, [])
+    
+    
     const foodItems = foods.filter(food=> food.category==="lunch");
 
 

@@ -18,12 +18,12 @@
 
 .input-form{    
     width: 30%;
-    position: absolute;
+    position:absolute;
     left: 0;
     right: 0;
     margin: 0 auto;
+    
 }
-
 
 .banner h1{
     margin-bottom: 2%;
@@ -34,7 +34,6 @@
     height: 500px;
     background-size: 100%;
     background-repeat: no-repeat;
-    padding-top: 10%;
 }
 
 .bottom-nav a{
@@ -61,4 +60,8 @@
 .cart-style :hover{
     color:red;
     text-decoration: none;
+}
+
+body{
+    overflow-x: hidden;
 }

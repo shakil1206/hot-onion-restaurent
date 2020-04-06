@@ -1,11 +1,24 @@
 import React, { useState } from 'react';
-import fakeData from '../../fakeData';
 import FoodItems from '../FoodItems/FoodItems';
 import { addToDatabaseCart } from '../../utilities/databaseManager';
+import { useEffect } from 'react';
 
 const Dinner = () => {
 
-    const [foods, setFoods] = useState(fakeData);    
+    const [foods, setFoods] = useState([]);
+
+    useEffect(() => {
+
+        fetch('http://localhost:4200/products')
+            .then(res => res.json())
+            .then(data => {
+                setFoods(data);
+            })
+
+    }, []) 
+    
+    
+
     const foodItems = foods.filter(food=> food.category==="dinner");
 
     const [cart, setCart] = useState([]);

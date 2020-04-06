@@ -4,6 +4,7 @@ import './ReviewItem.css';
 const ReviewItem = (props) => {
 
     const { img, name, price, quantity,key } = props.cart;
+    
 
     return (
         <div className="item-style d-flex justify-content-between align-items-center">

@@ -1,15 +1,37 @@
 import React, { useState, useEffect } from 'react';
 import { getDatabaseCart, removeFromDatabaseCart } from '../../utilities/databaseManager';
-import fakeData from '../../fakeData';
 import './Review.css';
 import ReviewItem from '../ReviewItem/ReviewItem';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../UseAuth/UseAuth';
+import { useForm } from 'react-hook-form';
 
 const Review = () => {
+    const auth = useAuth();
+    const { register, handleSubmit, errors } = useForm();
+
+
+    const onSubmit = (data) => {
+        console.log(auth.user.email, auth.user.name);
+
+        const savedCart = getDatabaseCart();
+        const orderDetail = { email: auth.user.email, cart: savedCart };
+        fetch('http://localhost:4200/placeOrder', {
+            method: 'POST',
+            body: JSON.stringify(orderDetail),
+            headers: {
+                "Content-type": "application/json; charset=UTF-8"
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log("Order Placed");
+            })
+    }
 
     const [cart, setCart] = useState([]);
-    const auth = useAuth();
+
+
 
     const removeProduct = (productKey) => {
         //Remove from database cart
@@ -17,7 +39,6 @@ const Review = () => {
         setCart(newCart);
 
         removeFromDatabaseCart(productKey);
-
     }
 
     //Calculating product price
@@ -25,8 +46,8 @@ const Review = () => {
     for (let i = 0; i < cart.length; i++) {
         const product = cart[i];
         total = total + product.price * product.quantity;
-
     }
+
 
     let tax = 0;
     if (total > 100) {
@@ -53,12 +74,24 @@ const Review = () => {
 
         const savedCart = getDatabaseCart();
         const productKeys = Object.keys(savedCart);
-        const cartProducts = productKeys.map(key => {
-            const product = fakeData.find(pd => pd.key === key);
-            product.quantity = savedCart[key];
-            return product;
-        });
-        setCart(cartProducts);
+
+
+        fetch('http://localhost:4200/getProductsByKey', {
+            method: 'POST',
+            body: JSON.stringify(productKeys),
+            headers: {
+                "Content-type": "application/json; charset=UTF-8"
+            }
+        })
+            .then(response => response.json())
+            .then(foods => {
+                const cartProducts = productKeys.map(key => {
+                    const product = foods.find(pd => pd.key === key);
+                    product.quantity = savedCart[key];
+                    return product;
+                });
+                setCart(cartProducts);
+            })
 
     }, [])
 
@@ -66,23 +99,35 @@ const Review = () => {
         <div>
 
             <div className="container">
-                <div className="row">
+                <div className="row st">
                     <div className="col-md-6">
                         <h3 style={{ textAlign: 'left', marginTop: '40px' }}>Edit Delivery Details</h3>
                         <hr></hr>
 
-                        <input className="form-control" type="text" placeholder="Delivery to Door" />
-                        <br />
-                        <input className="form-control" type="text" placeholder="Flat and Road No" />
-                        <br />
-                        <input className="form-control" type="text" placeholder="District" />
-                        <br />
-                        <input className="form-control" type="text" placeholder="Bussiness Name" />
-                        <br />
-                        <input className="form-control" type="text" placeholder="Add Delivery Instructor" />
-                        <br />
+                        <form className="ship-form" onSubmit={handleSubmit(onSubmit)}>
+                            <input className="form-control" name="name" ref={register({ required: true })} placeholder="Name" />
+                            {errors.name && <span className="error">Name is required</span>}
+                            <br />
+                            <input className="form-control" name="email" ref={register({ required: true })} placeholder="Email" />
+                            {errors.email && <span className="error">Email is required</span>}
+                            <br />
+                            <input className="form-control" name="addressLine1" ref={register({ required: true })} placeholder="Address Line1" />
+                            {errors.addressLine1 && <span className="error">Address is required</span>}
+                            <br />
+                            <input className="form-control" name="addressLine2" ref={register} placeholder="Address Line2" />
+                            <br />
+                            <input className="form-control" name="city" ref={register({ required: true })} placeholder="City" />
+                            {errors.city && <span className="error">City is required</span>}
+                            <br />
+                            <input className="form-control" name="country" ref={register({ required: true })} placeholder="Country" />
+                            {errors.country && <span className="error">Country is required</span>}
+                            <br />
+                            <input className="form-control" name="zipcode" ref={register({ required: true })} placeholder="Zip Code" />
+                            {errors.zipcode && <span className="error">Zipcode is required</span>}
+                            <br />
+                            <input className="form-control btn btn-danger" type="submit" value="Save And Continue" />
+                        </form>
 
-                        <button className="btn btn-danger form-control">Save And Continue</button>
                     </div>
                     <div className="form-control" className="col-md-6">
 
@@ -116,9 +161,8 @@ const Review = () => {
 
                             <Link to="/orderComplited">
                                 {
-                                    auth.user ? <button  className="btn btn-danger form-control">Place Order</button>
-                                    :<button  className="btn btn-danger form-control">Log in First!</button>
-
+                                    auth.user ? <button className="btn btn-danger form-control">Place Order</button>
+                                        : <button className="btn btn-danger form-control">Log in First!</button>
                                 }
                             </Link>
                         </div>

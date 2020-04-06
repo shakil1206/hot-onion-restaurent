@@ -3,7 +3,7 @@ import * as firebase from "firebase/app";
 import "firebase/auth";
 import firebaseConfig from "../../Firebase.config";
 import { useState, createContext } from "react";
-import {Route, Redirect} from 'react-router-dom';
+import { Route, Redirect } from 'react-router-dom';
 
 
 firebase.initializeApp(firebaseConfig);
@@ -11,24 +11,24 @@ firebase.initializeApp(firebaseConfig);
 const AuthContext = createContext();
 
 export const AuthContextProvider = (props) => {
-    const auth = Auth();
-    return <AuthContext.Provider value={auth}>{props.children}</AuthContext.Provider>
+  const auth = Auth();
+  return <AuthContext.Provider value={auth}>{props.children}</AuthContext.Provider>
 }
 
 export const useAuth = () => {
-    return useContext(AuthContext);
+  return useContext(AuthContext);
 }
 
 
-export const PrivateRoute =({ children, ...rest }) => {
-    const auth = useAuth();
-    return (
-      <Route
-        {...rest}
-        render={({ location }) =>
-          auth.user? (
-            children
-          ) : (
+export const PrivateRoute = ({ children, ...rest }) => {
+  const auth = useAuth();
+  return (
+    <Route
+      {...rest}
+      render={({ location }) =>
+        auth.user ? (
+          children
+        ) : (
             <Redirect
               to={{
                 pathname: "/login",
@@ -36,64 +36,61 @@ export const PrivateRoute =({ children, ...rest }) => {
               }}
             />
           )
-        }
-      />
-    );
-  }
-
+      }
+    />
+  );
+}
 
 
 const getUser = user => {
-    const { displayName, email, photoURL } = user;
-    return{ name: displayName, email: email, photoURL };
+  const { displayName, email, photoURL } = user;
+  return { name: displayName, email: email, photoURL };
 }
 
 const Auth = () => {
+  const [user, setUser] = useState(null);
+  const singInWithGoogle = () => {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    return firebase.auth().signInWithPopup(provider)
+      .then(res => {
 
-    const [user, setUser] = useState(null);
+        const signedInUser = getUser(res.user);
+        setUser(signedInUser);
+        return res;
+      })
+      .catch(error => {
+        console.log(error);
+        return error.message;
+      })
+  }
 
 
-    const singInWithGoogle = () => {
-        const provider = new firebase.auth.GoogleAuthProvider();
-        return firebase.auth().signInWithPopup(provider)
-            .then(res => {
-                
-                const signedInUser = getUser(res.user);
-                setUser(signedInUser);
-                return res;
-            })
-            .catch(error => {
-                console.log(error);
-                return error.message;
-            })
-    }
+  const signOut = () => {
+    firebase.auth().signOut().then(function () {
+      setUser(null);
+    }).catch(function (error) {
+      // An error happened.
+    });
+  }
 
-    const signOut = () => {
-        firebase.auth().signOut().then(function () {
-            setUser(null);
-        }).catch(function (error) {
-            // An error happened.
-        });
-    }
 
-    useEffect(() => {
-        firebase.auth().onAuthStateChanged(function (usr) {
-            if (usr) {
+  useEffect(() => {
+    firebase.auth().onAuthStateChanged(function (usr) {
+      if (usr) {
 
-                const currUser = getUser(usr)
-                setUser(currUser);
-            } else {
-                // No user is signed in.
-            }
-        });
-    },[])
+        const currUser = getUser(usr)
+        setUser(currUser);
+      } else {
+        // No user is signed in.
+      }
+    });
+  }, [])
 
-    return {
-        singInWithGoogle,
-        user,
-        signOut
-    }
+  return {
+    singInWithGoogle,
+    user,
+    signOut
+  }
 
 }
-
 export default Auth;

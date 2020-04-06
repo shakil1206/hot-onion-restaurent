@@ -1,27 +1,23 @@
-.footer-style{
+.footer-style-copy{
     background-color: rgb(37, 37, 37);
     height: 250px;
     padding: 40px;
     text-indent: 20px;
+    color: white;
+    text-align: justify;
 }
 
-.footer-top{
-    text-align: justify;
-    color: white;
-    display: flex;
-}
+
 .footer-top img{
     width: 150px;
-    height: 60px;
+    height: 50px;
 
-}
-
-.footer-bottom{
-    color: white;
-    display: flex;
-    margin-top: 30px;
 }
 
 .bottom-content{
     display: flex;
+}
+
+.bottom-copy{
+    margin-top: 3%;
 }
