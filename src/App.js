@@ -28,7 +28,6 @@ function App() {
       <AuthContextProvider>
         <Navigation></Navigation>
         <Router>
-
           <Switch>
             <Route path="/breakfast">
               <Header></Header>

@@ -1,3 +1,14 @@
+## Hot Onion Foods (Full Stack):
+A complete restaurant app. Where you can order food from the menu
+and pay online using credit card.<br/><br/>
+
+**Technology:** React, Redux, Material-UI, Bootstrap, Node.js, MongoDB<br/>
+**Tools:** VSCode, Git, Netlify, Firebase, Hiroku.<br/>
+**Live Link:** [Hot Onion Foods](https://hot-onion-resturent.firebaseapp.com/ "Hot Onion Foods")<br/>
+
+
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts

@@ -10,6 +10,8 @@ import CheckoutForm from '../CheckoutForm/CheckoutForm';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
 
+
+
 const Review = () => {
     const auth = useAuth();
     const { register, handleSubmit, errors } = useForm();
